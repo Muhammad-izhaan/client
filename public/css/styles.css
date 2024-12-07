@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-dark text-white leading-relaxed overflow-x-hidden;
+    }
+}
+
+@layer components {
+    .hero-bg-image {
+        background-image: url('https://img.freepik.com/free-photo/medical-team-examining-x-ray-report_107420-84798.jpg?semt=ais_hybrid');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transform: scale(1.1);
+        transition: transform 0.3s ease-out;
+        will-change: transform;
+        opacity: 0.85;
+    }
+
+    .nav-link {
+        @apply relative pb-1 hover:text-white;
+    }
+
+    .nav-link i {
+        @apply transition-transform duration-300;
+    }
+
+    .nav-link:hover i {
+        @apply transform -translate-y-0.5;
+    }
+
+    .nav-links {
+        @apply flex list-none gap-10 items-center h-full;
+    }
+
+    .nav-links a {
+        @apply text-white/70 hover:text-white font-medium transition-all duration-300;
+    }
+
+    .nav-links .cta-button {
+        @apply bg-primary text-dark px-6 py-3 rounded-full transition-all duration-300 hover:bg-secondary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30;
+    }
+
+    .stat {
+        @apply p-6 bg-white/5 rounded-xl backdrop-blur-sm transition-all duration-500;
+    }
+
+    .stat-number {
+        @apply text-2xl font-bold text-primary;
+    }
+
+    .stat-label {
+        @apply text-white/70;
+    }
+}
+
+@layer utilities {
+    .animation-delay-200 {
+        animation-delay: 200ms;
+    }
+    .animation-delay-400 {
+        animation-delay: 400ms;
+    }
+    .animation-delay-600 {
+        animation-delay: 600ms;
+    }
+    .animation-delay-800 {
+        animation-delay: 800ms;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideLeft {
+        from {
+            opacity: 0;
+            transform: translateX(20px) translateY(-50%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(-50%);
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .animate-slideUp {
+        animation: slideUp 0.6s ease-out forwards;
+    }
+
+    .animate-slideLeft {
+        animation: slideLeft 0.6s ease-out forwards;
+    }
+
+    .menu-open {
+        @apply overflow-hidden;
+    }
+
+    .nav-links.active {
+        @apply translate-x-0;
+    }
+
+    @media (max-width: 1024px) {
+        .nav-links {
+            @apply fixed top-0 right-0 w-64 h-screen bg-darker/95 backdrop-blur-lg flex-col justify-start pt-24 px-8 translate-x-full transition-transform duration-300;
+        }
+    }
+
+    @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .animate-gradient {
+        animation: gradientFlow 8s linear infinite;
+        background-size: 200% 200%;
+    }
+}

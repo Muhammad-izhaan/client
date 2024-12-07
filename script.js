@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Logo click refresh
+    const logo = document.getElementById('navLogo');
+    logo.addEventListener('click', () => {
+        window.location.reload();
+    });
+
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');

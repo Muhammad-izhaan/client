@@ -4,22 +4,16 @@ const helmet = require('helmet');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Security middleware
+// Security middleware with relaxed settings for local development
 app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-            imgSrc: ["'self'", "https:", "data:", "blob:"],
-            connectSrc: ["'self'"],
-        }
-    }
+    contentSecurityPolicy: false  // Disabled for local development
 }));
 
-// Static files
-app.use(express.static(path.join(__dirname, 'public')));
+// Static files - ensure this comes before routes
+app.use(express.static('public'));
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 // Set EJS as templating engine
 app.set('view engine', 'ejs');
@@ -37,6 +31,17 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${port}`);
+    // Get local IP address
+    const { networkInterfaces } = require('os');
+    const nets = networkInterfaces();
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+            if (net.family === 'IPv4' && !net.internal) {
+                console.log(`Access on local network: http://${net.address}:${port}`);
+            }
+        }
+    }
 });

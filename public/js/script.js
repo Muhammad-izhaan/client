@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        navLinks.classList.toggle('translate-x-full');
         body.classList.toggle('overflow-hidden');
         menuToggle.classList.toggle('active');
         
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (!navLinks.contains(e.target) && !menuToggle.contains(e.target) && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
+            navLinks.classList.add('translate-x-full');
             body.classList.remove('overflow-hidden');
             menuToggle.classList.remove('active');
             const icon = menuToggle.querySelector('i');
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
+            navLinks.classList.add('translate-x-full');
             body.classList.remove('overflow-hidden');
             menuToggle.classList.remove('active');
             const icon = menuToggle.querySelector('i');
@@ -54,7 +57,46 @@ document.addEventListener('DOMContentLoaded', () => {
                     behavior: 'smooth',
                     block: 'start'
                 });
+                // Close mobile menu after clicking a link
+                navLinks.classList.remove('active');
+                navLinks.classList.add('translate-x-full');
+                body.classList.remove('overflow-hidden');
+                menuToggle.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
+        });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fadeIn');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections for fade-in
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+
+    // Handle form submissions (if any)
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            // Add form submission logic here
+            console.log('Form submitted');
         });
     });
 

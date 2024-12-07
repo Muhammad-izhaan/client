@@ -15,7 +15,7 @@
 
 @layer components {
     .hero-bg-image {
-        background-image: url('https://img.freepik.com/free-photo/medical-team-examining-x-ray-report_107420-84798.jpg?semt=ais_hybrid');
+        background-image: url('https://img.freepik.com/free-photo/medical-team-examining-x-ray-report_107420-84798.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -26,63 +26,36 @@
     }
 
     .nav-link {
-        @apply relative pb-1 hover:text-white;
+        @apply relative pb-1 hover:text-white text-white/70 font-medium transition-all duration-300;
     }
 
-    .nav-link i {
-        @apply transition-transform duration-300;
+    .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 origin-right;
     }
 
-    .nav-link:hover i {
-        @apply transform -translate-y-0.5;
+    .nav-link:hover::after {
+        @apply scale-x-100 origin-left;
     }
 
-    .nav-links {
-        @apply flex list-none gap-10 items-center h-full;
+    .btn-primary {
+        @apply bg-primary/90 hover:bg-primary text-dark font-medium px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/30;
     }
 
-    .nav-links a {
-        @apply text-white/70 hover:text-white font-medium transition-all duration-300;
+    .btn-secondary {
+        @apply border-2 border-primary/70 hover:border-primary text-primary hover:text-white px-8 py-4 rounded-full transition-all duration-300 hover:bg-primary hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20;
     }
 
-    .nav-links .cta-button {
-        @apply bg-primary text-dark px-6 py-3 rounded-full transition-all duration-300 hover:bg-secondary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30;
+    .service-card {
+        @apply bg-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10;
     }
 
-    .stat {
-        @apply p-6 bg-white/5 rounded-xl backdrop-blur-sm transition-all duration-500;
+    .solution-card {
+        @apply bg-white/5 rounded-xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10;
     }
 
-    .stat-number {
-        @apply text-2xl font-bold text-primary;
-    }
-
-    .stat-label {
-        @apply text-white/70;
-    }
-}
-
-@layer utilities {
-    .animation-delay-200 {
-        animation-delay: 200ms;
-    }
-    .animation-delay-400 {
-        animation-delay: 400ms;
-    }
-    .animation-delay-600 {
-        animation-delay: 600ms;
-    }
-    .animation-delay-800 {
-        animation-delay: 800ms;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
+    .float-button {
+        @apply bg-primary/90 hover:bg-primary text-dark w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-x-1 hover:shadow-lg hover:shadow-primary/30;
     }
 
     @keyframes slideUp {
@@ -99,16 +72,21 @@
     @keyframes slideLeft {
         from {
             opacity: 0;
-            transform: translateX(20px) translateY(-50%);
+            transform: translateX(20px);
         }
         to {
             opacity: 1;
-            transform: translateX(0) translateY(-50%);
+            transform: translateX(0);
         }
     }
 
-    .animate-fadeIn {
-        animation: fadeIn 1s ease-out forwards;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
     .animate-slideUp {
@@ -119,28 +97,21 @@
         animation: slideLeft 0.6s ease-out forwards;
     }
 
-    .menu-open {
-        @apply overflow-hidden;
+    .animate-fadeIn {
+        animation: fadeIn 1s ease-out forwards;
+    }
+}
+
+@media (max-width: 1024px) {
+    .nav-links {
+        @apply fixed top-0 right-0 w-64 bg-darker/95 backdrop-blur-lg flex-col py-20 px-6 h-screen transform translate-x-full transition-transform duration-300;
     }
 
     .nav-links.active {
         @apply translate-x-0;
     }
 
-    @media (max-width: 1024px) {
-        .nav-links {
-            @apply fixed top-0 right-0 w-64 h-screen bg-darker/95 backdrop-blur-lg flex-col justify-start pt-24 px-8 translate-x-full transition-transform duration-300;
-        }
-    }
-
-    @keyframes gradientFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    .animate-gradient {
-        animation: gradientFlow 8s linear infinite;
-        background-size: 200% 200%;
+    .nav-links a {
+        @apply py-3;
     }
 }
